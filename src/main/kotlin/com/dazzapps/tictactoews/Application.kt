@@ -1,4 +1,4 @@
-package com.dazzapps
+package com.dazzapps.tictactoews
 
 import io.ktor.server.application.*
 

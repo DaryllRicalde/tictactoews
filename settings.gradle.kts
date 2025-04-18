@@ -1,1 +1,1 @@
-rootProject.name = "chatapp"
+rootProject.name = "tictactoews"
