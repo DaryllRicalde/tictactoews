@@ -8,19 +8,27 @@ typealias Field = Array<Array<Char?>>
 @Serializable
 data class GameState(
     val playerAtTurn: Player? = null,
-    val field: Field = newGame(),
+    val field: Field = createEmptyField(),
     val winningPlayer: Player? = null,
     val isBoardFull: Boolean = false,
     val connectedPlayers: List<Player> = emptyList()
 ) {
     companion object {
-        fun newGame(): Field =
+        fun createEmptyField(): Field =
             arrayOf(
                 arrayOf(null, null, null),
                 arrayOf(null, null, null),
                 arrayOf(null, null, null)
             )
     }
+
+    fun createNewGameWithCurrentConnectedPlayers(): GameState =
+        this.copy(
+            playerAtTurn = 'X',
+            field = createEmptyField(),
+            winningPlayer = null,
+            isBoardFull = false
+        )
 
     /**
      * Auto-generated
