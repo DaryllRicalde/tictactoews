@@ -1,16 +1,13 @@
 package com.dazzapps.tictactoews
 
-import io.ktor.server.application.*
-import io.ktor.server.http.content.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import com.dazzapps.tictactoews.models.Game
+import io.ktor.server.application.Application
+import io.ktor.server.routing.routing
 
-fun Application.configureRouting() {
+fun Application.configureRouting(game: Game) {
     routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
+        socket(game)
         // Static plugin. Try to access `/static/index.html`
-        staticResources("/static", "static")
+        // staticResources("/static", "static")
     }
 }

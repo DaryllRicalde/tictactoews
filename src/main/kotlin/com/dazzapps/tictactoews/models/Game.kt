@@ -17,7 +17,7 @@ import kotlinx.serialization.json.Json
 import org.jetbrains.annotations.VisibleForTesting
 import java.util.concurrent.ConcurrentHashMap
 
-class Game(gameState: GameState) {
+class Game(gameState: GameState = GameState()) {
 
     @VisibleForTesting
     val state = MutableStateFlow(gameState)
@@ -30,7 +30,7 @@ class Game(gameState: GameState) {
     }
 
     /**
-     * Connect a player if [GameState.connectedPlayers] is not full
+     * Connect a player if [GameState.connectedPlayers] is not full. Otherwise returns null
      *
      * Player 1 is Player 'X', and Player 2 is Player 'O'
      */
@@ -46,7 +46,8 @@ class Game(gameState: GameState) {
         }
         state.update {
             it.copy(
-                connectedPlayers = it.connectedPlayers + player
+                connectedPlayers = it.connectedPlayers + player,
+                playerAtTurn = if(isPlayerX) player else it.playerAtTurn
             )
         }
         return player
@@ -93,11 +94,12 @@ class Game(gameState: GameState) {
                     startNewGameDelayed()
                     return
                 }
-                it.copy(
+                val newState = it.copy(
                     playerAtTurn = player.opponent,
                     field = updatedField,
                     isBoardFull = isBoardFull
                 )
+                newState
             }
         }
     }
