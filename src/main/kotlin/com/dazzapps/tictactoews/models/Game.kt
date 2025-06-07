@@ -90,14 +90,13 @@ class Game(gameState: GameState = GameState()) {
                     field[move.xCoordinate][move.yCoordinate] = player
                 }
                 val isBoardFull = allFieldsIsNonEmpty(updatedField)
-                if (isBoardFull || gameWonByPlayer(player)) {
+                if(isBoardFull) {
                     startNewGameDelayed()
-                    return
                 }
                 val newState = it.copy(
                     playerAtTurn = player.opponent,
                     field = updatedField,
-                    isBoardFull = isBoardFull
+                    winningPlayer = if(gameWonByPlayer(player)) player.also { startNewGameDelayed() } else null
                 )
                 newState
             }

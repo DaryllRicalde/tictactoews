@@ -18,26 +18,21 @@ fun Route.socket(game: Game) {
     route("/play") {
         webSocket {
             val player = game.connectPlayer(this)
-
             if(player == null) {
                 close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Max number of players reached"))
                 return@webSocket
             }
-            outgoing.send(Frame.Text("Welcome $player"))
 
             try {
                 incoming.consumeEach { frame ->
                     if(frame is Frame.Text) {
                         val move = extractMove(frame.readText())
-                        outgoing.send(Frame.Text("Move received $move"))
                         game.makeMove(player, move)
                     }
                 }
             } catch(e: Exception) {
                 e.printStackTrace()
-                outgoing.send(Frame.Text("Invalid move detected"))
             } finally {
-                outgoing.send(Frame.Text("Disconnecting $player"))
                 game.disconnectPlayer(player)
             }
         }
