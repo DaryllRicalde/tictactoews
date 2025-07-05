@@ -19,6 +19,7 @@ fun Route.socket(game: Game) {
         webSocket {
             val player = game.connectPlayer(this)
             if(player == null) {
+                println("LOG: Cannot connect player")
                 close(CloseReason(CloseReason.Codes.CANNOT_ACCEPT, "Max number of players reached"))
                 return@webSocket
             }

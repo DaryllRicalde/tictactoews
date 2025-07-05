@@ -1,6 +1,5 @@
 package com.dazzapps.tictactoews.models
 
-import com.dazzapps.tictactoews.main
 import io.ktor.websocket.WebSocketSession
 import io.ktor.websocket.send
 import kotlinx.coroutines.CoroutineScope
@@ -37,10 +36,12 @@ class Game(gameState: GameState = GameState()) {
     fun connectPlayer(session: WebSocketSession): Player? {
         // Check if game is full
         if (state.value.connectedPlayers.isFull()) {
+            println("TTT: Game is full")
             return null
         }
         val isPlayerX = state.value.connectedPlayers.isEmpty()
         val player = if (isPlayerX) 'X' else 'O'
+        println("TTT: Player $player has connected to the game")
         if (playerHasNotConnectedBefore(player)) {
             playerSockets[player] = session
         }
