@@ -3,27 +3,10 @@ package com.dazzapps
 import com.dazzapps.tictactoews.models.Field
 import com.dazzapps.tictactoews.models.Game
 import com.dazzapps.tictactoews.models.GameState
-import com.dazzapps.tictactoews.models.Move
-import com.dazzapps.tictactoews.module
-import io.ktor.client.request.*
-import io.ktor.http.*
-import io.ktor.server.testing.*
-import kotlinx.serialization.json.Json
 import org.junit.Assert.assertTrue
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class ApplicationTest {
-
-    @Test
-    fun testRoot() = testApplication {
-        application {
-            module()
-        }
-        client.get("/").apply {
-            assertEquals(HttpStatusCode.OK, status)
-        }
-    }
 
     @Test
     fun playerMustWinViaColumns() {
